@@ -13,8 +13,8 @@
 </div>
 
 ## TODO
-- [] Provide minimal implementation of RLE loss.
-- [] Provide implementation on Human3.6M dataset.
+- [ ] Provide minimal implementation of RLE loss.
+- [ ] Provide implementation on Human3.6M dataset.
 
 ### Installation
 1. Install pytorch >= 1.1.0 following official instruction.
