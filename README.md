@@ -8,7 +8,7 @@
 > ICCV 2021 Oral  
 
 <div align="center">
-    <img src="assets/rle.png", width="600" alt><br>
+    <img src="assets/rle.jpg", width="600" alt><br>
     Regression with Residual Log-likelihood Estimation
 </div>
 
