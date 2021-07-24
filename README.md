@@ -7,6 +7,14 @@
 > Jiefeng Li, Siyuan Bian, Ailing Zeng, Can Wang, Bo Pang, Wentao Liu, Cewu Lu  
 > ICCV 2021 Oral  
 
+<div align="center">
+    <img src="assets/rle.png", width="600" alt><br>
+    Regression with Residual Log-likelihood Estimation
+</div>
+
+## TODO
+- [] Provide minimal implementation of RLE loss.
+- [] Provide implementation on Human3.6M dataset.
 
 ### Installation
 1. Install pytorch >= 1.1.0 following official instruction.
