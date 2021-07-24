@@ -1,6 +1,6 @@
-@inproceedings{li2020hybrik,
-    title={HybrIK: A Hybrid Analytical-Neural Inverse Kinematics Solution for 3D Human Pose and Shape Estimation},
-    author={Li, Jiefeng and Xu, Chao and Chen, Zhicun and Bian, Siyuan and Yang, Lixin and Lu, Cewu},
-    booktitle={CVPR},
+@inproceedings{li2021human,
+    title={Human Pose Regression with Residual Log-likelihood Estimation},
+    author={Li, Jiefeng and Bian, Siyuan and Zeng, Ailing and Wang, Can and Pang, Bo and Liu, Wentao and Lu, Cewu},
+    booktitle={ICCV},
     year={2021}
 }
