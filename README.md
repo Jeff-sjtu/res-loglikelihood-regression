@@ -1,9 +1,9 @@
 # Human Pose Regression with Residual Log-likelihood Estimation
 
-[[`Paper`]()]
-[[`Project Page`](https://jeffli.site/rle/)]
+[[`Paper`](https://jeffli.site/res-loglikelihood-regression/resources/ICCV21-RLE.pdf)]
+[[`Project Page`](https://jeffli.site/res-loglikelihood-regression/)]
 
-> [Human Pose Regression with Residual Log-likelihood Estimation]()  
+> [Human Pose Regression with Residual Log-likelihood Estimation](https://jeffli.site/res-loglikelihood-regression/resources/ICCV21-RLE.pdf)  
 > Jiefeng Li, Siyuan Bian, Ailing Zeng, Can Wang, Bo Pang, Wentao Liu, Cewu Lu  
 > ICCV 2021 Oral  
 
