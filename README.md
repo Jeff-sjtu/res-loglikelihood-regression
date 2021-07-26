@@ -1,6 +1,7 @@
 # Human Pose Regression with Residual Log-likelihood Estimation
 
 [[`Paper`](https://jeffli.site/res-loglikelihood-regression/resources/ICCV21-RLE.pdf)]
+[[`arXiv`](https://arxiv.org/abs/2107.11291)]
 [[`Project Page`](https://jeffli.site/res-loglikelihood-regression/)]
 
 > [Human Pose Regression with Residual Log-likelihood Estimation](https://jeffli.site/res-loglikelihood-regression/resources/ICCV21-RLE.pdf)  
