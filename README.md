@@ -52,16 +52,30 @@ mkdir data
                 |-- 000000000632.jpg
                 |-- ... 
 ```
+## Training
 
-### Train from scratch
+### Train on MSCOCO
 ``` bash
-./scripts/train.sh ./configs/256x192_res50_regress-flow.yaml train_rle
+./scripts/train.sh ./configs/256x192_res50_regress-flow.yaml train_rle_coco
 ```
 
-### Evaluation
+### Train on Human3.6M
+``` bash
+./scripts/train.sh ./configs/256x192_res50_3d_h36mmpii-flow.yaml train_rle_h36m
+```
+
+## Evaluation
+
+### Validate on MSCOCO
 Download the pretrained model from [Google Drive](https://drive.google.com/file/d/1YBHqNKkxIVv8CqgDxkezC-4vyKpx-zXK/view?usp=sharing).
 ``` bash
 ./scripts/validate.sh ./configs/256x192_res50_regress-flow.yaml ./coco-laplace-rle.pth
+```
+
+### Validate on Human3.6M
+Download the pretrained model from [Google Drive](https://drive.google.com/file/d/1v2ZhembnFyJ_FXGHEOCzGaM-tAVFMy7A/view?usp=sharing).
+``` bash
+./scripts/validate.sh ./configs/256x192_res50_3d_h36mmpii-flow.yaml ./h36m-laplace-rle.pth
 ```
 
 ### Citing
