@@ -1,0 +1,60 @@
+DATASET:
+  TRAIN:
+    TYPE: 'H36mMpii'
+    SET_LIST:
+      - ROOT: './data/h36m/'
+        TRAIN_SET: 'Sample_trainmin_train_Human36M'
+      - ROOT: './data/mpii/'
+        TRAIN_SET: 'annot_mpii'
+  VAL:
+    TYPE: 'H36mMpii'
+    TEST_SET: 'Sample_64_test_Human36M'
+DATA_PRESET:
+  TYPE: 'simple_3d'
+  PROTOCOL: 2
+  SIGMA: 2
+  ROT_FACTOR: 30
+  SCALE_FACTOR: 0.3
+  NUM_JOINTS_HALF_BODY: 8
+  PROB_HALF_BODY: -1
+  COLOR_FACTOR: 0.2
+  OCCLUSION: True
+  NUM_JOINTS: 18
+  NORM_TYPE: 'softmax'
+  IMAGE_SIZE:
+  - 256
+  - 256
+  HEATMAP_SIZE:
+  - 64
+  - 64
+  OUT_3D: True
+MODEL:
+  TYPE: 'RegressFlow3D'
+  PRETRAINED: ''
+  TRY_LOAD: ''
+  NUM_FC_FILTERS:
+  - -1
+  NUM_LAYERS: 50
+  DEPTH_DIM: 64
+LOSS:
+  TYPE: 'RLELoss3D'
+TEST:
+  HEATMAP2COORD: 'coord'
+TRAIN:
+  WORLD_SIZE: 4
+  BATCH_SIZE: 32
+  BEGIN_EPOCH: 0
+  END_EPOCH: 200
+  OPTIMIZER: 'adam'
+  GRAD_CLIP:
+    MAX_NORM: 35
+    NORM_TYPE: 2
+  LR: 0.001
+  LR_FACTOR: 0.1
+  LR_STEP:
+  - 90
+  - 120
+  DPG_MILESTONE: 140
+  DPG_STEP:
+  - 160
+  - 190

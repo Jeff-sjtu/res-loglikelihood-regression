@@ -211,3 +211,62 @@ def validate_gt(m, opt, cfg, heatmap_to_coord, batch_size=20):
         return res['AP']
     else:
         return 0
+
+
+def validate_gt_3d(m, opt, cfg, heatmap_to_coord, batch_size=20):
+    gt_val_dataset = builder.build_dataset(cfg.DATASET.VAL, preset_cfg=cfg.DATA_PRESET, train=False, heatmap2coord=cfg.TEST.HEATMAP2COORD)
+    gt_val_sampler = torch.utils.data.distributed.DistributedSampler(
+        gt_val_dataset, num_replicas=opt.world_size, rank=opt.rank)
+
+    gt_val_loader = torch.utils.data.DataLoader(
+        gt_val_dataset, batch_size=batch_size, shuffle=False, num_workers=20, drop_last=False, sampler=gt_val_sampler)
+    kpt_pred = {}
+    m.eval()
+
+    hm_size = cfg.DATA_PRESET.HEATMAP_SIZE
+
+    if opt.log:
+        gt_val_loader = tqdm(gt_val_loader, dynamic_ncols=True)
+
+    for inps, labels, img_ids, bboxes in gt_val_loader:
+        inps = inps.cuda()
+        output = m(inps)
+
+        if opt.flip_test:
+            inps_flipped = flip(inps).cuda()
+
+            output_flipped = flip_output(
+                m(inps_flipped), gt_val_dataset.joint_pairs,
+                width_dim=hm_size[1], shift=True)
+            for k in output.keys():
+                if output[k] is not None:
+                    output[k] = (output[k] + output_flipped[k]) / 2
+
+        for i in range(inps.shape[0]):
+            bbox = bboxes[i].tolist()
+            pose_coords, pose_scores = heatmap_to_coord(
+                output, bbox, idx=i)
+            assert pose_coords.shape[0] == 1
+
+            kpt_pred[int(img_ids[i])] = {
+                'uvd': pose_coords[0]
+            }
+
+    with open(os.path.join(opt.work_dir, f'test_gt_kpt_rank_{opt.rank}.pkl'), 'wb') as fid:
+        pk.dump(kpt_pred, fid, pk.HIGHEST_PROTOCOL)
+
+    torch.distributed.barrier()  # Make sure all JSON files are saved
+
+    if opt.rank == 0:
+        kpt_all_pred = {}
+        for r in range(opt.world_size):
+            with open(os.path.join(opt.work_dir, f'test_gt_kpt_rank_{r}.pkl'), 'rb') as fid:
+                kpt_pred = pk.load(fid)
+
+            os.remove(os.path.join(opt.work_dir, f'test_gt_kpt_rank_{r}.pkl'))
+            kpt_all_pred.update(kpt_pred)
+
+        tot_err = gt_val_dataset.evaluate(kpt_all_pred, os.path.join('exp', 'test_h36m_3d_kpt.json'))
+        return tot_err
+    else:
+        return -1
