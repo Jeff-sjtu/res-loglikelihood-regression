@@ -9,7 +9,7 @@ import torch.multiprocessing as mp
 import torch.utils.data
 from rlepose.models import builder
 from rlepose.opt import cfg, logger, opt
-from rlepose.trainer import train, validate, validate_gt
+from rlepose.trainer import train, validate, validate_gt, validate_gt_3d
 from rlepose.utils.env import init_dist
 from rlepose.utils.metrics import NullWriter
 from rlepose.utils.transforms import get_coord
@@ -102,6 +102,7 @@ def main_worker(gpu, opt, cfg):
     heatmap_to_coord = get_coord(cfg, cfg.DATA_PRESET.HEATMAP_SIZE, output_3d)
 
     opt.trainIters = 0
+    best_err = 999
 
     for i in range(cfg.TRAIN.BEGIN_EPOCH, cfg.TRAIN.END_EPOCH):
         opt.epoch = i
@@ -122,9 +123,18 @@ def main_worker(gpu, opt, cfg):
                 torch.save(m.module.state_dict(), './exp/{}-{}/model_{}.pth'.format(opt.exp_id, cfg.FILE_NAME, opt.epoch))
             # Prediction Test
             with torch.no_grad():
-                gt_AP = validate_gt(m, opt, cfg, heatmap_to_coord)
-                det_AP = validate(m, opt, cfg, heatmap_to_coord)
-                logger.info(f'##### Epoch {opt.epoch} | gt mAP: {gt_AP} | det mAP: {det_AP} #####')
+                if output_3d:
+                    err = validate_gt_3d(m, opt, cfg, heatmap_to_coord, opt.valid_batch)
+                    if opt.log and err <= best_err:
+                        best_err = err
+                        torch.save(m.module.state_dict(), './exp/{}-{}/best_model.pth'.format(opt.exp_id, cfg.FILE_NAME))
+
+                    logger.info(f'##### Epoch {opt.epoch} | gt results: {err}/{best_err} #####')
+
+                else:
+                    gt_AP = validate_gt(m, opt, cfg, heatmap_to_coord)
+                    det_AP = validate(m, opt, cfg, heatmap_to_coord)
+                    logger.info(f'##### Epoch {opt.epoch} | gt mAP: {gt_AP} | det mAP: {det_AP} #####')
 
         torch.distributed.barrier()  # Sync
 
