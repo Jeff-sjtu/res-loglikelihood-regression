@@ -15,6 +15,7 @@
 
 ## TODO
 - [ ] Provide minimal implementation of RLE loss.
+- [ ] Add model zoo.
 - [x] Provide implementation on Human3.6M dataset.
 - [x] Provide implementation on COCO dataset.
 
