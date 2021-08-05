@@ -33,7 +33,7 @@ pip install -U 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=Pyth
 ``` bash
 mkdir data
 ```
-5. Download [COCO](https://cocodataset.org/#download) data:
+5. Download [COCO](https://cocodataset.org/#download) data and [Human3.6M](https://drive.google.com/drive/folders/1kgVH-GugrLoc9XyvP6nRoaFpw3TmM5xK) data (from [PoseNet](https://github.com/mks0601/3DMPPE_POSENET_RELEASE) or [ours](https://drive.google.com/file/d/1jh_nnQo2wMFCffGCn8Xh3xvlCVgBuWPZ/view?usp=sharing)):
 ```
 |-- data
 `-- |-- coco
@@ -51,6 +51,16 @@ mkdir data
                 |-- 000000000285.jpg
                 |-- 000000000632.jpg
                 |-- ... 
+    |-- h36m
+    `-- |-- annotations
+        |   |-- Sample_trainmin_train_Human36M_protocol_2.json
+        |   `-- Sample_64_test_Human36M_protocol_2.json
+        `-- images
+            |-- s_01_act_02_subact_01_ca_01
+            |   |-- ...
+            |-- s_01_act_02_subact_01_ca_02
+            |   |-- ...
+            `-- ... 
 ```
 ## Training
 
