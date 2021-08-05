@@ -37,20 +37,20 @@ mkdir data
 ```
 |-- data
 `-- |-- coco
-    `-- |-- annotations
-        |   |-- person_keypoints_train2017.json
-        |   `-- person_keypoints_val2017.json
-        `-- images
-            |-- train2017
-            |   |-- 000000000009.jpg
-            |   |-- 000000000025.jpg
-            |   |-- 000000000030.jpg
-            |   |-- ... 
-            `-- val2017
-                |-- 000000000139.jpg
-                |-- 000000000285.jpg
-                |-- 000000000632.jpg
-                |-- ... 
+    |   |-- annotations
+    |   |   |-- person_keypoints_train2017.json
+    |   |   `-- person_keypoints_val2017.json
+    |   `-- images
+    |       |-- train2017
+    |       |   |-- 000000000009.jpg
+    |       |   |-- 000000000025.jpg
+    |       |   |-- 000000000030.jpg
+    |       |   |-- ... 
+    |       `-- val2017
+    |           |-- 000000000139.jpg
+    |           |-- 000000000285.jpg
+    |           |-- 000000000632.jpg
+    |           |-- ... 
     |-- h36m
     `-- |-- annotations
         |   |-- Sample_trainmin_train_Human36M_protocol_2.json
