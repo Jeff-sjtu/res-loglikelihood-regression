@@ -34,7 +34,7 @@ pip install -U 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=Pyth
 ``` bash
 mkdir data
 ```
-5. Download [COCO](https://cocodataset.org/#download) data and [Human3.6M](https://drive.google.com/drive/folders/1kgVH-GugrLoc9XyvP6nRoaFpw3TmM5xK) data (from [PoseNet](https://github.com/mks0601/3DMPPE_POSENET_RELEASE) or [ours](https://drive.google.com/file/d/1jh_nnQo2wMFCffGCn8Xh3xvlCVgBuWPZ/view?usp=sharing)):
+5. Download [COCO](https://cocodataset.org/#download) data, [MPII](http://human-pose.mpi-inf.mpg.de/#download) ([annotations](https://drive.google.com/file/d/1--EQZnCJI_XJIc9_bw-dzw3MrRFLMptw/view?usp=sharing)) and [Human3.6M](https://drive.google.com/drive/folders/1kgVH-GugrLoc9XyvP6nRoaFpw3TmM5xK) data (from [PoseNet](https://github.com/mks0601/3DMPPE_POSENET_RELEASE) or [ours](https://drive.google.com/drive/folders/1sF2xjAfvEw7rvNaQJqadAU2QDUVFfhQH?usp=sharing)):
 ```
 |-- data
 `-- |-- coco
@@ -52,6 +52,14 @@ mkdir data
     |           |-- 000000000285.jpg
     |           |-- 000000000632.jpg
     |           |-- ... 
+    |-- mpii
+    |   |-- annotations
+    |   |   `-- annot_mpii.json
+    |   `-- images
+            |-- 000001163.jpg
+            |-- 000003072.jpg
+            |-- 000004812.jpg
+            |--- ...
     |-- h36m
     `-- |-- annotations
         |   |-- Sample_trainmin_train_Human36M_protocol_2.json
