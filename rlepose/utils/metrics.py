@@ -131,7 +131,7 @@ def calc_accuracy(output, target):
 
     preds, _ = get_max_pred_batch(preds)
     labels, _ = get_max_pred_batch(labels)
-    norm = np.ones((preds.shape[0], 2)) * np.array([hm_w, hm_h]) / 10
+    norm = np.ones((preds.shape[0], 2)) * np.array([hm_h, hm_w]) / 10
 
     dists = calc_dist(preds, labels, norm)
 
