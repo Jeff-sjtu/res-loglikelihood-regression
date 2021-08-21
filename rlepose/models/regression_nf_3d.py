@@ -149,7 +149,8 @@ class RegressFlow3D(nn.Module):
 
         # (B, N, 3)
         pred_jts = out_coord.reshape(BATCH_SIZE, self.num_joints, 3)
-        pred_jts[:, :, 2] = pred_jts[:, :, 2] - pred_jts[:, self.root_idx:self.root_idx + 1, 2]
+        if not self.training:
+            pred_jts[:, :, 2] = pred_jts[:, :, 2] - pred_jts[:, self.root_idx:self.root_idx + 1, 2]
 
         sigma = out_sigma.reshape(BATCH_SIZE, self.num_joints, -1).sigmoid() + 1e-9
         scores = 1 - sigma

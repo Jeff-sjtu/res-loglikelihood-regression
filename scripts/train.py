@@ -124,7 +124,7 @@ def main_worker(gpu, opt, cfg):
             # Prediction Test
             with torch.no_grad():
                 if output_3d:
-                    err = validate_gt_3d(m, opt, cfg, heatmap_to_coord, opt.valid_batch)
+                    err = validate_gt_3d(m, opt, cfg, heatmap_to_coord)
                     if opt.log and err <= best_err:
                         best_err = err
                         torch.save(m.module.state_dict(), './exp/{}-{}/best_model.pth'.format(opt.exp_id, cfg.FILE_NAME))

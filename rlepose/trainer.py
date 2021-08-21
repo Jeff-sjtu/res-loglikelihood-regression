@@ -4,12 +4,25 @@ import pickle as pk
 
 import numpy as np
 import torch
+from torch.nn.utils import clip_grad
 from tqdm import tqdm
 
 from rlepose.models import builder
 from rlepose.utils.metrics import DataLogger, calc_accuracy, calc_coord_accuracy, evaluate_mAP
 from rlepose.utils.nms import oks_pose_nms
 from rlepose.utils.transforms import flip, flip_output
+
+
+def clip_gradient(optimizer, max_norm, norm_type):
+    """
+    Clips gradients computed during backpropagation to avoid explosion of gradients.
+
+    :param optimizer: optimizer with the gradients to be clipped
+    :param grad_clip: clip value
+    """
+    for group in optimizer.param_groups:
+        for param in group["params"]:
+            clip_grad.clip_grad_norm_(param, max_norm, norm_type)
 
 
 def train(opt, cfg, train_loader, m, criterion, optimizer):
@@ -20,6 +33,7 @@ def train(opt, cfg, train_loader, m, criterion, optimizer):
     depth_dim = cfg.MODEL.get('DEPTH_DIM')
     output_3d = cfg.DATA_PRESET.get('OUT_3D', False)
     hm_shape = (hm_shape[1], hm_shape[0], depth_dim)
+    grad_clip = cfg.TRAIN.get('GRAD_CLIP', False)
 
     if opt.log:
         train_loader = tqdm(train_loader, dynamic_ncols=True)
@@ -52,6 +66,8 @@ def train(opt, cfg, train_loader, m, criterion, optimizer):
         optimizer.zero_grad()
         loss.backward()
 
+        if grad_clip:
+            clip_gradient(optimizer, grad_clip.MAX_NORM, grad_clip.NORM_TYPE)
         optimizer.step()
 
         opt.trainIters += 1
