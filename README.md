@@ -16,6 +16,7 @@
 ## TODO
 - [ ] Provide minimal implementation of RLE loss.
 - [ ] Add model zoo.
+- [x] Provide implementation of single person pose estimation visualization.
 - [x] Provide implementation on Human3.6M dataset.
 - [x] Provide implementation on COCO dataset.
 
@@ -96,6 +97,14 @@ Download the pretrained model from [Google Drive](https://drive.google.com/file/
 ``` bash
 ./scripts/validate.sh ./configs/256x192_res50_3d_h36mmpii-flow.yaml ./h36m-laplace-rle.pth
 ```
+
+
+## Visualization
+``` bash
+./scripts/visualize.sh ./configs/256x192_res50_coco_visualize.yaml visual_rle_coco
+```
+
+![](./assets/test1.gif)
 
 ### Citing
 If our code helps your research, please consider citing the following paper:
