@@ -1,0 +1,64 @@
+DATASET:
+  TRAIN:
+    TYPE: 'Mscoco'
+    ROOT: '/data1/TL/data/coco-keypoint'
+    IMG_PREFIX: 'train2017'
+    ANN: 'annotations/person_keypoints_train2017.json'
+    AUG:
+      FLIP: true
+      ROT_FACTOR: 45
+      SCALE_FACTOR: 0.25
+      NUM_JOINTS_HALF_BODY: 3
+      PROB_HALF_BODY: 0.3
+  VAL:
+    TYPE: 'Mscoco'
+    ROOT: '/data1/TL/data/coco-keypoint'
+    IMG_PREFIX: 'val2017'
+    ANN: 'annotations/person_keypoints_val2017.json'
+  TEST:
+    TYPE: 'Mscoco_det'
+    ROOT: '/data1/TL/data/coco-keypoint'
+    IMG_PREFIX: 'val2017'
+    DET_FILE: './exp/json/test_det_rcnn.json'
+    ANN: 'annotations/person_keypoints_val2017.json'
+DATA_PRESET:
+  TYPE: 'simple'
+  SIGMA: 2
+  NUM_JOINTS: 17
+  IMAGE_SIZE:
+  - 256
+  - 192
+  HEATMAP_SIZE:
+  - 64
+  - 48
+MODEL:
+  TYPE: 'RegressFlow'
+  PRETRAINED: 'coco-laplace-rle.pth'
+  TRY_LOAD: ''
+  NUM_FC_FILTERS:
+  - -1
+  HIDDEN_LIST: -1
+  NUM_LAYERS: 50
+LOSS:
+  TYPE: 'RLELoss'
+TEST:
+  HEATMAP2COORD: 'coord'
+TRAIN:
+  WORLD_SIZE: 8
+  BATCH_SIZE: 128
+  BEGIN_EPOCH: 0
+  END_EPOCH: 270
+  OPTIMIZER: 'adam'
+  LR: 0.001
+  LR_FACTOR: 0.1
+  LR_STEP:
+  - 170
+  - 200
+VISUALIZE:
+  CHECKPOINT: './coco-laplace-rle.pth'
+  VIDEO_PATH: './test.mp4'
+  USE_GPU: True
+  VIDEO_WIDTH: 1920
+  VIDEO_HEIGHT: 1080
+  CONFIDENCE_THRESHOLD: 0.8
+  FLAG_WRITE_VIDEO: True
